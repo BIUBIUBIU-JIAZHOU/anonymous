@@ -68,21 +68,6 @@ class ModelArguments:
                     "with private models)."
         },
     )
-    hidden_dropout: float = field(
-        default=0.01, metadata={"help": "hidden_dropout"}
-    )
-    hidden_size: int = field(
-        default=768, metadata={"help": "hidden_size"}
-    )
-    num_hidden_layers: int = field(
-        default=12, metadata={"help": "layers in encoder"}
-    )
-    num_attention_heads: int = field(
-        default=12, metadata={"help": "heads in multi-head attention of encoder"}
-    )
-    absa_lamda: float = field(
-        default=0.01, metadata={"help": "hidden_dropout"}
-    )
 
 
 @dataclass
@@ -122,15 +107,6 @@ class DataTrainingArguments:
     )
     ctrl_token: str = field(
         default='post', metadata={"help": "combine sentence and orders"})
-    is_pre_seq_len: int = field(
-        default=10, metadata={"help": "length of prefix in implicit sentiment"}
-    )
-    absa_pre_seq_len: int = field(
-        default=10, metadata={"help": "length of prefix in absa"}
-    )
-    prompt_file: str = field(
-        default='./absa_prompt.txt', metadata={"help": "list of prompts for absa"}
-    )
     topk: int = field(
         default=1, metadata={"help": "order number"}
     )
@@ -185,12 +161,7 @@ class ABSASeq2SeqTrainingArguments(Seq2SeqTrainingArguments):
     Arguments for our model in training procedure
     """
     constraint_decoding: bool = field(default=False, metadata={"help": "Whether to Constraint Decoding or not."})
-    alpha: float = field(default=0.5, metadata={"help": "adjust the loss weight of ao_template and oa_template"})
-    train_task: str = field(
-        default="absa",
-        metadata={
-            "help": "The specific task to train. (absa, implicit_sentiment, joint)"}
-    )
+    alpha: float = field(default=0.5, metadata={"help": "adjust the loss weight of ao_template and oa_template"}))
 
 
 def main():

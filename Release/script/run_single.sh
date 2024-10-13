@@ -64,15 +64,6 @@ dataset=laptop16
               --combined ${combined} \
               --virtual_token ${virtual_token} \
               --implicit_token ${implicit_token} \
-              --hidden_dropout 0.01 \
-              --hidden_size 768 \
-              --is_pre_seq_len 12 \
-              --absa_pre_seq_len 128 \
-              --num_hidden_layers 12 \
-              --num_attention_heads 12 \
-              --train_task absa \
-              --absa_lamda 0.1 \
-              --prompt_file ./absa_prompt.txt
       done
   done
 

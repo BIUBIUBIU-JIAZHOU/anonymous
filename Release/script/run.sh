@@ -1,23 +1,15 @@
 #!/bin/bash
 
-#tasks=("acos" "asqp")
-#for task_name in "${tasks[@]}"; do
-#    if [ "$task_name" = "acos" ]; then
-#        datasets=("laptop16" "rest16")
-#    else
-#        datasets=("rest15" "rest16")
-#    fi
-tasks=("acos")
+tasks=("acos" "asqp")
 for task_name in "${tasks[@]}"; do
-    if [ "$task_name" = "acos" ]; then
-        datasets=("rest16")
-    else
-        datasets=("rest16")
-    fi
-
+   if [ "$task_name" = "acos" ]; then
+       datasets=("laptop16" "rest16")
+   else
+       datasets=("rest15" "rest16")
+   fi
     for dataset in "${datasets[@]}"; do
 
-        for top_k in $(seq 15 15); do  # 修改这里以直接使用 5
+        for top_k in $(seq 15 15); do 
             for seed in 3407; do
                 echo "Current task: $dataset"
 
@@ -29,8 +21,8 @@ for task_name in "${tasks[@]}"; do
                 export learning_rate=1e-4
                 export alpha=0.5
                 export constraint_decoding=True
-                export model_name_or_path=/mnt/sda3/ztj/pretrained-models/t5-base
-                export cls_model_name_or_path=/mnt/sda3/ztj/pretrained-models/bert-base-uncased
+                export model_name_or_path=
+                export cls_model_name_or_path=
                 export save_strategy=epoch
                 export evaluation_strategy=epoch
                 export warmup_ratio=0
@@ -79,14 +71,6 @@ for task_name in "${tasks[@]}"; do
                     --combined ${combined} \
                     --virtual_token ${virtual_token} \
                     --implicit_token ${implicit_token} \
-                    --hidden_dropout 0.01 \
-                    --hidden_size 768 \
-                    --is_pre_seq_len 12 \
-                    --absa_pre_seq_len 128 \
-                    --num_hidden_layers 12 \
-                    --num_attention_heads 12 \
-                    --train_task absa \
-                    --absa_lamda 0.1 \
                     --prompt_file ./absa_prompt.txt
             done
         done
