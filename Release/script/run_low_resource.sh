@@ -22,8 +22,8 @@ for task_name in "${tasks[@]}"; do
                   export learning_rate=1e-4
                   export alpha=0.5
                   export constraint_decoding=True
-                  export model_name_or_path=/mnt/sda3/ztj/pretrained-models/t5-base
-                  export cls_model_name_or_path=/mnt/sda3/ztj/pretrained-models/bert-base-uncased
+                  export model_name_or_path=
+                  export cls_model_name_or_path=
                   export save_strategy=steps
                   export evaluation_strategy=steps
                   export shot_ratio_index="-1[+]${ratio}[+]0"

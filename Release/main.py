@@ -9,8 +9,7 @@ import torch
 from transformers import Seq2SeqTrainingArguments, HfArgumentParser, AutoConfig, AutoTokenizer
 from transformers.trainer_utils import is_main_process, set_seed
 
-from models import T5ForConditionalGeneration, IsPrefixForSequenceClassification, ABSAPrefixForConditionalGeneration, \
-    T5EncoderModel, IsABSAModel
+from models import T5ForConditionalGeneration, ABSAPrefixForConditionalGeneration
 from trainer import MultiTaskTrainer
 from utils.data_utils_mix import ABSADataset
 # from utils.data_utils import ABSADataset
@@ -161,7 +160,7 @@ class ABSASeq2SeqTrainingArguments(Seq2SeqTrainingArguments):
     Arguments for our model in training procedure
     """
     constraint_decoding: bool = field(default=False, metadata={"help": "Whether to Constraint Decoding or not."})
-    alpha: float = field(default=0.5, metadata={"help": "adjust the loss weight of ao_template and oa_template"}))
+    alpha: float = field(default=0.5, metadata={"help": "adjust the loss weight of ao_template and oa_template"})
 
 
 def main():
@@ -219,8 +218,10 @@ def main():
     )
     # implicit_virtual_tokens = ['<implicit_vtoken_a>', '<implicit_vtoken_a1>', '<implicit_vtoken_c>', '<implicit_vtoken_s>', '<implicit_vtoken_o>', '<implicit_vtoken_o1>', '<implicit_sentence>']
     # explicit_virtual_tokens = ['<explicit_vtoken_a>', '<explicit_vtoken_a1>', '<explicit_vtoken_c>', '<explicit_vtoken_s>', '<explicit_vtoken_o>', '<explicit_vtoken_o1>', '<explicit_sentence>']
-    implicit_virtual_tokens = ['<implicit_vtoken_a>', '<implicit_vtoken_c>', '<implicit_vtoken_s>', '<implicit_vtoken_o>']
-    explicit_virtual_tokens = ['<explicit_vtoken_a>', '<explicit_vtoken_c>', '<explicit_vtoken_s>', '<explicit_vtoken_o>']
+    implicit_virtual_tokens = ['<implicit_vtoken_a>', '<implicit_vtoken_c>', '<implicit_vtoken_s>',
+                               '<implicit_vtoken_o>']
+    explicit_virtual_tokens = ['<explicit_vtoken_a>', '<explicit_vtoken_c>', '<explicit_vtoken_s>',
+                               '<explicit_vtoken_o>']
     tokenizer_t5.add_tokens(implicit_virtual_tokens + explicit_virtual_tokens)
     # 为T5模型扩展词表并初始化这些虚拟token的嵌入
     pretrained_model_t5.resize_token_embeddings(len(tokenizer_t5))
@@ -234,11 +235,7 @@ def main():
     if not training_args.do_train:
         logger.info("load checkpoint of IsABSAModel !")
         # model.load_state_dict(torch.load(f"{training_args.output_dir}/checkpoint-6832/pytorch_model.bin"))
-        model.load_state_dict(
-            torch.load(
-                f"/mnt/sda3/ztj/L-Tuning-SA -Prompt/outputs/acos/laptop16_seed3407_epoch20_bts16_lr1e-4_use-is_virtual-token-front-topk-15_combined/checkpoint-27208/pytorch_model.bin"))
-        # model.load_state_dict(
-        #     torch.load(f"outputs_models/AO-fpsl/unified_5/checkpoint-7120/pytorch_model.bin")
+        model.load_state_dict(torch.load(""))
 
     train_dataset = ABSADataset(tokenizer_t5=tokenizer_t5,
                                 data_path=data_args.train_path,
